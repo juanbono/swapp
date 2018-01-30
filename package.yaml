@@ -1,0 +1,63 @@
+# This YAML file describes your package. Stack will automatically generate a
+# Cabal file when you run `stack build`. See the hpack website for help with
+# this file: <https://github.com/sol/hpack>.
+name: swapp
+version: '0.0.0'
+github: "juanbono/swapp-haskell"
+license: MIT
+author: "Juan Bono"
+maintainer: "Juan Bono"
+synopsis: Example package
+# description: swapp is a new Haskeleton package.
+# category: Other
+
+# global dependencies
+dependencies:
+  - lens
+  - text
+  - bytestring
+
+library:
+  dependencies:
+  - base
+  - aeson
+  - http-client
+  source-dirs: library
+  ghc-options: -Wall
+
+executables:
+  swapp:
+    source-dirs: executable
+    main: Main.hs
+    dependencies:
+    - base
+    - swapp
+    - optparse-applicative
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+tests:
+  swapp-test:
+    source-dirs: test
+    main: Main.hs
+    dependencies:
+    - base
+    - swapp
+    - tasty
+    - tasty-hspec
+    - tasty-quickcheck
+    - tasty-hunit
+    - tasty-discover
+    ghc-options:
+    - -rtsopts
+    - -threaded
+    - -with-rtsopts=-N
+
+extra-source-files:
+- CHANGELOG.md
+- LICENSE.md
+- package.yaml
+- README.md
+- stack.yaml
