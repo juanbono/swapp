@@ -7,20 +7,17 @@ github: "juanbono/swapp-haskell"
 license: MIT
 author: "Juan Bono"
 maintainer: "Juan Bono"
-synopsis: Example package
-# description: swapp is a new Haskeleton package.
-# category: Other
 
 # global dependencies
 dependencies:
   - lens
   - text
   - bytestring
+  - aeson
 
 library:
   dependencies:
   - base
-  - aeson
   - http-client
   source-dirs: library
   ghc-options: -Wall
