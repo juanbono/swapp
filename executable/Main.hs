@@ -1,5 +1,6 @@
 
 import CLI
+import API
 
 main :: IO ()
 main = do

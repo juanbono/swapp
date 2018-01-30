@@ -3,8 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Types
-  ( main
-  , Character(..)
+  ( Character(..)
   , Film(..)
   ) where
 
@@ -74,6 +73,7 @@ data Character
 instance ToJSON Character
 instance FromJSON Character
 
+
 luke :: Character
 luke = Character
   { name = "Luke Skywalker"
@@ -102,9 +102,4 @@ luke = Character
   , edited = "2014-12-20T21:17:56.891000Z"
   , url = "https://swapi.co/api/people/1/"
   }
-
-
--- | An example function.
-main :: IO ()
-main = BS.putStrLn $ encode luke
 
