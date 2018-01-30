@@ -5,13 +5,16 @@
 module Types
   ( Character(..)
   , Film(..)
+  , Search(..)
+  , SearchError(..)
+  , SearchResult
+  , filmsInCommon
   ) where
 
 import GHC.Generics
 import Data.Text
 import Data.Aeson
-import Data.Aeson.TH
-import qualified Data.ByteString.Lazy as BS
+import Data.List
 
 data Film
   = Film
@@ -57,11 +60,11 @@ data Character
       -- | A list of urls of film resources that this person has been in.
     , films :: [Text]
       -- | The url of the species resource that this person is.
-    , species :: [Text] -- ?
+    , species :: [Text]
       -- | A list of vehicle resources that this person has piloted
-    , vehicles :: [Text] -- [Vehicle]
+    , vehicles :: [Text]
       -- | A list of starship resources that this person has piloted
-    , starships :: [Text] -- [Starship]
+    , starships :: [Text]
       -- | The url of this resource
     , url :: Text
       -- | The ISO 8601 date format of the time that this resource was created.
@@ -73,6 +76,27 @@ data Character
 instance ToJSON Character
 instance FromJSON Character
 
+data SearchError
+  = AmbiguousName Integer
+  | NotFound
+  | MagicError
+  deriving (Show, Eq)
+
+data Search = Search
+  { count :: Integer
+  , results :: [Character]
+  } deriving (Show, Generic)
+
+instance ToJSON Search
+instance FromJSON Search
+
+type SearchResult = Either SearchError Character
+
+filmsInCommon :: Character -> Character -> [Text]
+filmsInCommon character1 character2 = films1 `intersect` films2
+  where
+    films1 = films character1
+    films2 = films character2
 
 luke :: Character
 luke = Character
