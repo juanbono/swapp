@@ -16,3 +16,9 @@ stack exec swapp
 # Install the executable (Optional).
 stack install
 ```
+
+### Usage
+If you have installed the swapp executable, you can run it as follows:
+``` sh
+swapp -f leia -s luke
+```
