@@ -19,7 +19,7 @@ import Data.List
 data Film
   = Film
   { title         :: Text
-  , episode_id    :: Text
+  , episode_id    :: Int
   , opening_crawl :: Text
   , director      :: Text
   , producer      :: Text
@@ -29,9 +29,9 @@ data Film
   , vehicles      :: [Text]
   , characters    :: [Text]
   , planets       :: [Text]
-  , url           :: [Text]
-  , created       :: [Text]
-  , edited        :: [Text]
+  , url           :: Text
+  , created       :: Text
+  , edited        :: Text
   } deriving (Show, Generic)
 
 instance ToJSON Film where
@@ -78,16 +78,15 @@ instance FromJSON Character
 
 data SearchError
   = AmbiguousName String Integer
-  | NotFound
+  | NotFound String
   | MagicError
-  deriving (Eq)
 
 instance Show SearchError where
   show (AmbiguousName input numberOfResults)
-    = "\"" ++ input ++ "\" is ambiguous, " ++ "it has " ++ show numberOfResults
+    = "'" ++ input ++ "'" ++ " is ambiguous, " ++ "it has " ++ show numberOfResults
     ++ " possible matches, please be more specific."
-  show NotFound = "Not found"
-  show MagicError = "Unknown error"
+  show (NotFound input) = "'" ++ input ++ "'" ++ " can not be found."
+  show MagicError = "Unknown error."
 data Search = Search
   { count :: Integer
   , results :: [Character]
@@ -103,33 +102,3 @@ filmsInCommon character1 character2 = films1 `intersect` films2
   where
     films1 = films character1
     films2 = films character2
-
-luke :: Character
-luke = Character
-  { name = "Luke Skywalker"
-  , height = "172"
-  , mass = "77"
-  , hair_color = "blond"
-  , skin_color = "fair"
-  , eye_color = "blue"
-  , birth_year = "19BBY"
-  , gender = "male"
-  , homeworld = "https://swapi.co/api/planets/1/"
-  , films = [ "https://swapi.co/api/films/2/"
-            , "https://swapi.co/api/films/6/"
-            , "https://swapi.co/api/films/3/"
-            , "https://swapi.co/api/films/1/"
-            , "https://swapi.co/api/films/7/"
-            ]
-  , species = [ "https://swapi.co/api/species/1/" ]
-  , vehicles = [ "https://swapi.co/api/vehicles/14/"
-               , "https://swapi.co/api/vehicles/30/"
-               ]
-  , starships = [ "https://swapi.co/api/starships/12/"
-                , "https://swapi.co/api/starships/22/"
-                ]
-  , created = "2014-12-09T13:50:51.644000Z"
-  , edited = "2014-12-20T21:17:56.891000Z"
-  , url = "https://swapi.co/api/people/1/"
-  }
-
