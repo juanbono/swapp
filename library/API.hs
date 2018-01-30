@@ -20,4 +20,4 @@ mkSearch character = do
   case count search of
     0 -> return $ Left NotFound
     1 -> return $ Right (head . results $ search)
-    n -> return $ Left (AmbiguousName n)
+    n -> return $ Left (AmbiguousName character n)

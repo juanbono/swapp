@@ -77,11 +77,17 @@ instance ToJSON Character
 instance FromJSON Character
 
 data SearchError
-  = AmbiguousName Integer
+  = AmbiguousName String Integer
   | NotFound
   | MagicError
-  deriving (Show, Eq)
+  deriving (Eq)
 
+instance Show SearchError where
+  show (AmbiguousName input numberOfResults)
+    = "\"" ++ input ++ "\" is ambiguous, " ++ "it has " ++ show numberOfResults
+    ++ " possible matches, please be more specific."
+  show NotFound = "Not found"
+  show MagicError = "Unknown error"
 data Search = Search
   { count :: Integer
   , results :: [Character]
