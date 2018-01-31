@@ -71,7 +71,7 @@ data Character
     , created :: Text -- UTC.Time
       -- | the ISO 8601 date format of the time that this resource was edited.
     , edited :: Text
-    } deriving (Show, Generic)
+    } deriving (Eq, Show, Generic)
 
 instance ToJSON Character
 instance FromJSON Character
@@ -87,6 +87,7 @@ instance Show SearchError where
     ++ " possible matches, please be more specific."
   show (NotFound input) = "'" ++ input ++ "'" ++ " can not be found."
   show MagicError = "Unknown error."
+
 data Search = Search
   { count :: Integer
   , results :: [Character]

@@ -45,6 +45,7 @@ tests:
     dependencies:
     - base
     - swapp
+    - directory
     - tasty
     - tasty-hspec
     - tasty-quickcheck

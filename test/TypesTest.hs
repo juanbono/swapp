@@ -5,12 +5,13 @@ module TypesTest where
 import Types
 import Test.Tasty
 import Test.Tasty.HUnit
-import Test.Tasty.QuickCheck
 import Data.Aeson
 import qualified Data.ByteString.Lazy as BS
+import Data.Maybe
 
 main :: IO ()
-main = defaultMain jsonTests
+main = defaultMain test_json
+
 
 luke :: Character
 luke = Character
@@ -41,11 +42,11 @@ luke = Character
   , url = "https://swapi.co/api/people/1/"
   }
 
-lukeJson :: BS.ByteString
-lukeJson = ""
+decodingWorksFine :: TestTree
+decodingWorksFine = testCase "character's json decoding" $ do
+  lukeJson <- BS.readFile "test/luke.json"
+  assertEqual "decode" luke (fromJust $ decode lukeJson)
 
-jsonTests :: TestTree
-jsonTests = testGroup "JSON encoding / decoding tests"
-  [
-    testCase "character's json encoding" $ encode luke @=? lukeJson
-  ]
+test_json :: TestTree
+test_json = testGroup "JSON encoding / decoding tests"
+  [ decodingWorksFine ]
