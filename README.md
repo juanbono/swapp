@@ -4,6 +4,9 @@
 In order to run this project you need to install [stack](https://docs.haskellstack.org/en/stable/README/) first and then:
 
 ``` 
+# Install GHC (Optional if you already have GHC installed)
+$ stack setup
+
 # Build the project.
 $ stack build
 
