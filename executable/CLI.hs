@@ -1,26 +1,23 @@
 {- CLI -}
 
-module CLI (parseCharacters, InputChars(..)) where
+module CLI (parseCharacters) where
 
 import Options.Applicative
-import Data.Monoid
+import Data.Monoid ((<>))
 
-parseCharacters :: IO InputChars
+type Input = (String, String)
+
+parseCharacters :: IO Input
 parseCharacters = execParser opts
 
-data InputChars = InputChars
-  { firstCharacter  :: String
-  , secondCharacter :: String
-  } deriving (Show, Eq)
-
-parseInputChars :: Parser InputChars
-parseInputChars = InputChars
+parseInputChars :: Parser Input
+parseInputChars = (,)
   <$> strOption
   (help "First character" <> metavar "FIRST" <> short 'f')
   <*> strOption
   (help "Second character" <> metavar "SECOND" <> short 's')
 
-opts :: ParserInfo InputChars
+opts :: ParserInfo Input
 opts = info (parseInputChars <**> helper) (fullDesc <> description <> hd)
   where
     description = progDesc "Simple CLI App that gives you the set of films in common between two Star Wars characters"

@@ -4,18 +4,18 @@ module API (mkSearch, printFilmName) where
 
 import Types
 
-import Data.Aeson
+import Data.Aeson (decode)
 import qualified Data.Text as T
-import Network.HTTP.Simple
-import Data.Monoid
-import Data.Maybe
+import Network.HTTP.Simple (httpLbs, getResponseBody, parseRequest_)
+import Data.Monoid ((<>))
+import Data.Maybe (fromJust)
 
 baseUrl :: String
 baseUrl = "https://swapi.co/api/people/?search="
 
 getFilmName :: T.Text -> IO T.Text
 getFilmName resource = do
-  response <- httpLBS $ parseRequest_ (T.unpack resource)
+  response <- httpLbs $ parseRequest_ (T.unpack resource)
   let film = decode . getResponseBody $ response
   return $ title (fromJust film)
 
