@@ -10,17 +10,13 @@ maintainer: "Juan Bono"
 
 # global dependencies
 dependencies:
-  - lens
   - text
   - bytestring
   - aeson
-  - lens-aeson
-  - vector
-  - unordered-containers
+
 library:
   dependencies:
   - base
-  - http-client
   - http-conduit
   source-dirs: library
   ghc-options: -Wall
@@ -45,7 +41,6 @@ tests:
     dependencies:
     - base
     - swapp
-    - directory
     - tasty
     - tasty-hspec
     - tasty-quickcheck
